@@ -1,0 +1,45 @@
+
+# Eclipse / Buildship
+**/.classpath
+**/.project
+**/.settings/
+
+# Gradle cache
+**/.gradle/
+
+# Compiled output
+**/bin/
+**/build/
+**/target/
+
+# OS generated files
+**/.DS_Store
+**/Thumbs.db
+
+
+
+# Java / Gradle
+.gradle/
+**/build/
+**/out/
+*.class
+
+# IDE
+.idea/
+.vscode/
+*.iml
+
+# Local environment
+.env
+.env.*
+!.env.example
+
+# Logs and temporary files
+*.log
+*.tmp
+
+# Local blockchain or database state
+**/node-data/
+**/postgres-data/
+**/kafka-data/
+
