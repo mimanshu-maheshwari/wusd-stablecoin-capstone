@@ -9,13 +9,27 @@ import jakarta.validation.constraints.Pattern;
 import java.math.BigDecimal;
 
 public record DepositRequest(
-    @NotBlank String depositId,
 
-    @NotBlank String userId,
+  @NotBlank
+  @Pattern(regexp = "[A-Za-z0-9._:-]{1,128}")
+  String depositId,
 
-    @NotBlank @Pattern(regexp = "0x[a-fA-F0-9]{40}") String walletAddress,
+  @NotBlank
+  @Pattern(regexp = "[A-Za-z0-9._:-]{1,128}")
+  String userId,
 
-    @NotNull @DecimalMin("0.000001") @Digits(integer = 12, fraction = 6) BigDecimal amount,
+  @NotBlank
+  @Pattern(regexp = "0x[a-fA-F0-9]{40}")
+  String walletAddress,
 
-    @NotBlank @Pattern(regexp = "USD") String currency) {
+  @NotNull
+  @DecimalMin("0.000001")
+  @Digits(integer = 12, fraction = 6)
+  BigDecimal amount,
+
+  @NotBlank
+  @Pattern(regexp = "USD")
+  String currency
+
+) {
 }
