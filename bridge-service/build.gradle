@@ -42,6 +42,15 @@ dependencies {
 tasks.named('test') {
   useJUnitPlatform()
   systemProperty 'user.timezone', 'UTC'
+
+  // Run test classes sequentially while learning
+  // because several integration classes use shared resources.
+  maxParallelForks = 1
+
+  testLogging {
+    events 'passed', 'skipped', 'failed'
+    exceptionFormat 'full'
+  }
 }
 
 tasks.named('bootRun') {
