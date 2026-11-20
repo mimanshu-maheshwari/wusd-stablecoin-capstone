@@ -4,7 +4,7 @@ package com.mm.wusd.bridge.application;
 import com.mm.wusd.bridge.api.DepositRequest;
 import com.mm.wusd.bridge.exception.DepositConflictException;
 import com.mm.wusd.bridge.exception.DepositNotFoundException;
-import com.mm.wusd.bridge.persistance.InMemoryDepositRepository;
+import com.mm.wusd.bridge.persistence.InMemoryDepositRepository;
 
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -35,7 +35,7 @@ class DepositServiceTest {
   }
 
   @Test
-  void createsNewDeposit() throws DepositConflictException {
+  void createsNewDeposit() {
     var result = service.create(
         request("DEP-1", "250.50"));
 
@@ -47,7 +47,7 @@ class DepositServiceTest {
   }
 
   @Test
-  void identicalRetryDoesNotCreateAgain() throws DepositConflictException {
+  void identicalRetryDoesNotCreateAgain() {
     service.create(request("DEP-1", "250.50"));
 
     var retry = service.create(
@@ -57,7 +57,7 @@ class DepositServiceTest {
   }
 
   @Test
-  void rejectsConflictingDeposit() throws DepositConflictException {
+  void rejectsConflictingDeposit() {
     service.create(request("DEP-1", "250.50"));
 
     assertThrows(

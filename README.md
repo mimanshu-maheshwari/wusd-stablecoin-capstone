@@ -15,7 +15,7 @@ Stage 1, Lesson 1: Java project setup and Gradle.
 
 ## Requirements
 
-- JDK 21
+- JDK 25
 - Git
 - Gradle wrapper included in bridge-service
 
@@ -41,6 +41,4 @@ curl http://localhost:8080/actuator/health
 
 ## Status
 
-The application provides HTTP and health endpoints.
-It does not yet handle real fiat deposits or blockchain
-transactions.
+The application provides HTTP and health endpoints. It does not yet handle real fiat deposits or block-chain transactions.

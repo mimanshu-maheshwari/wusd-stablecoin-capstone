@@ -25,8 +25,7 @@ public class DepositController {
   }
 
   @PostMapping
-  public ResponseEntity<DepositResponse> create(@Valid @RequestBody DepositRequest request)
-      throws DepositConflictException {
+  public ResponseEntity<DepositResponse> create(@Valid @RequestBody DepositRequest request) {
     DepositService.CreateResult result = depositService.create(request);
     DepositResponse response = DepositResponse.from(result.deposit());
     return ResponseEntity.status(result.created() ? HttpStatus.CREATED : HttpStatus.OK).body(response);

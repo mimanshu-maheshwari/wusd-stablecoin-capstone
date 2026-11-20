@@ -3,13 +3,12 @@ package com.mm.wusd.bridge.application;
 import java.util.Locale;
 
 import org.springframework.stereotype.Service;
-
 import com.mm.wusd.bridge.api.DepositRequest;
 import com.mm.wusd.bridge.domain.Deposit;
 import com.mm.wusd.bridge.domain.TokenAmount;
 import com.mm.wusd.bridge.exception.DepositConflictException;
 import com.mm.wusd.bridge.exception.DepositNotFoundException;
-import com.mm.wusd.bridge.persistance.DepositRepository;
+import com.mm.wusd.bridge.persistence.DepositRepository;
 
 @Service
 public class DepositService {
@@ -20,26 +19,18 @@ public class DepositService {
     this.depositRepository = depositRepository;
   }
 
-  public CreateResult create(DepositRequest request) throws DepositConflictException {
-    Deposit deposit = new Deposit(
-        request.depositId(),
-        request.userId(),
-        request.walletAddress().toLowerCase(Locale.ROOT),
-        TokenAmount.toBaseUnits(request.amount()),
-        request.currency(),
-        "RECIEVED");
+  public CreateResult create(DepositRequest request) {
+    Deposit deposit = new Deposit(request.depositId(), request.userId(),
+        request.walletAddress().toLowerCase(Locale.ROOT), TokenAmount.toBaseUnits(request.amount()), request.currency(),
+        "RECEIVED");
 
     boolean created = depositRepository.insertIfAbsent(deposit);
-
     if (created) {
       return new CreateResult(deposit, created);
     }
 
-    Deposit existing = depositRepository
-        .findById(deposit.depositId())
-        .orElseThrow(() -> new IllegalStateException(
-            "Deposit disappeared after duplicate detection"));
-
+    Deposit existing = depositRepository.findById(deposit.depositId())
+        .orElseThrow(() -> new IllegalStateException("Deposit disappeared after duplicate detection"));
     if (!existing.equals(deposit)) {
       throw new DepositConflictException(deposit.depositId());
     }
@@ -48,8 +39,7 @@ public class DepositService {
   }
 
   public Deposit findById(String depositId) {
-    return depositRepository.findById(depositId)
-        .orElseThrow(() -> new DepositNotFoundException(depositId));
+    return depositRepository.findById(depositId).orElseThrow(() -> new DepositNotFoundException(depositId));
   }
 
   public record CreateResult(Deposit deposit, Boolean created) {

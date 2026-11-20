@@ -1,0 +1,26 @@
+services:
+  postgres:
+    image: postgres:17
+    container_name: wusd-postgres
+
+    environment:
+      POSTGRES_DB: wusd
+      POSTGRES_USER: wusd
+      POSTGRES_PASSWORD: wusd_dev_password
+
+    ports:
+      - "127.0.0.1:5432:5432"
+
+    volumes:
+      - wusd_postgres_data:/var/lib/postgresql/data
+
+    healthcheck:
+      test:
+        - CMD-SHELL
+        - "pg_isready -U wusd -d wusd"
+      interval: 5s
+      timeout: 3s
+      retries: 10
+
+volumes:
+  wusd_postgres_data:
