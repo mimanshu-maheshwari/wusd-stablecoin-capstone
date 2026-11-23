@@ -2,5 +2,6 @@ spring:
   kafka:
     listener:
       auto-startup: false
+      ack-mode: manual_immediate
     admin:
       auto-create: false
