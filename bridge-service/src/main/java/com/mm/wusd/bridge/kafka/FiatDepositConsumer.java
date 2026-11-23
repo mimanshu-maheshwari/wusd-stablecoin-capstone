@@ -26,7 +26,8 @@ public class FiatDepositConsumer {
     this.validator = validator;
   }
 
-  @KafkaListener(topics = FiatDepositProducer.TOPIC, groupId = "wusd-bridge")
+  // @KafkaListener(topics = FiatDepositProducer.TOPIC, groupId = "wusd-bridge")
+  @KafkaListener(topics = FiatDepositProducer.TOPIC)
   public void consume(ConsumerRecord<String, String> record, Acknowledgment acknowledgment) {
 
     FiatDepositedEvent event = jsonMapper.readValue(record.value(), FiatDepositedEvent.class);
