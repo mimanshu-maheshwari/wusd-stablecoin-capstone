@@ -25,6 +25,8 @@ dependencies {
   implementation 'org.springframework.boot:spring-boot-starter-jdbc'
   implementation 'org.springframework.boot:spring-boot-starter-flyway'
   implementation 'org.springframework.boot:spring-boot-starter-kafka'
+  implementation 'org.web3j:crypto:4.14.0'
+  implementation 'org.web3j:utils:4.14.0'
 
   runtimeOnly 'org.flywaydb:flyway-database-postgresql'
   runtimeOnly 'org.postgresql:postgresql'
@@ -55,5 +57,14 @@ tasks.named('test') {
 }
 
 tasks.named('bootRun') {
+  systemProperty 'user.timezone', 'UTC'
+}
+
+tasks.register('runBesuProbe', JavaExec) {
+  group = 'application'
+  description = 'Send one signed development-chain transaction'
+  classpath = sourceSets.main.runtimeClasspath
+  mainClass = 'com.mm.wusd.bridge.besu.BesuProbeMain'
+
   systemProperty 'user.timezone', 'UTC'
 }

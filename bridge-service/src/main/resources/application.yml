@@ -67,3 +67,5 @@ wusd:
     worker:
       enabled: ${WUSD_OUTBOX_WORKER_ENABLED:false}
       poll-ms: 1000
+  besu:
+    rpc-url: ${WUSD_BESU_RPC_URL:http://localhost:8545}
